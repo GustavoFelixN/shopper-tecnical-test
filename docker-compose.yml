@@ -1,7 +1,14 @@
-version: '3.8'
-
 services:
   server:
-    build: ./server
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+      target: base
+    volumes:
+      - ./server/src:/app/src
+      - ./server/nodemon.json:/app/nodemon.json
+    expose:
+      - '3000'
     ports:
-      - "8080:8080"
+      - '3000:3000'
+    command: npm run dev
