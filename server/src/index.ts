@@ -1,3 +1,4 @@
+import 'dotenv/config';
 import express, { Request, Response } from 'express';
 import { rideEstimateSchema, RideEstimateRequest } from './schemas/rideSchemas';
 import { ValidationError } from 'yup';
@@ -5,7 +6,8 @@ import { ValidationError } from 'yup';
 const app = express();
 app.use(express.json());
 
-const PORT = process.env.PORT || 8080;
+const PORT = 8080;
+const API_KEY = process.env.GOOGLE_API_KEY;
 
 const estimateRoute = async (req: Request, res: Response) => {
     try {
