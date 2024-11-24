@@ -7,11 +7,7 @@ app.use(express.json());
 
 const PORT = process.env.PORT || 8080;
 
-app.get('/', (_req: Request, res: Response) => {
-    res.send('Sucesso');
-});
-
-const estimate = async (req: Request, res: Response) => {
+const estimateRoute = async (req: Request, res: Response) => {
     try {
         const validateBody: RideEstimateRequest =
             await rideEstimateSchema.validate(req.body, { abortEarly: true });
@@ -33,7 +29,7 @@ const estimate = async (req: Request, res: Response) => {
     }
 };
 
-app.post('/ride/estimate', async (req, res) => estimate(req, res) as any);
+app.post('/ride/estimate', async (req, res) => estimateRoute(req, res) as any);
 
 app.listen(PORT, () => {
     console.log(`Server runnig at port: ${PORT}`);
