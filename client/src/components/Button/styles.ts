@@ -1,16 +1,18 @@
-import React from 'react';
+import styled from 'styled-components';
 
-export const buttonStyle: React.CSSProperties = {
-  padding: '10px 20px',
-  backgroundColor: '#0dab78',
-  color: '#fff',
-  border: 'none',
-  borderRadius: '5px',
-  cursor: 'pointer',
-  fontSize: '16px',
-  fontWeight: 'bold',
-};
+// Estilização do botão
+export const StyledButton = styled.button`
+  padding: 10px 20px;
+  background-color: #0dab78;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  transition: background-color 0.3s;
 
-export const hoverStyle: React.CSSProperties = {
-  backgroundColor: '#0c9a6a',
-};
+  &:hover {
+    background-color: #0c9a6a;
+  }
+`;

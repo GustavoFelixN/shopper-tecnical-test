@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { buttonStyle, hoverStyle } from './styles.ts';
+import { StyledButton } from './styles.ts';
 
 interface ButtonProps {
   label: string;
@@ -7,23 +7,13 @@ interface ButtonProps {
 }
 
 const Button: FC<ButtonProps> = ({ label, onClick }) => {
-  const handleMouseEnter = (e: React.MouseEvent<HTMLButtonElement>) => {
-    (e.target as HTMLButtonElement).style.backgroundColor = hoverStyle.backgroundColor as string;
-  };
-
-  const handleMouseLeave = (e: React.MouseEvent<HTMLButtonElement>) => {
-    (e.target as HTMLButtonElement).style.backgroundColor = buttonStyle.backgroundColor as string;
-  };
 
   return (
-    <button
+    <StyledButton
       onClick={onClick}
-      style={buttonStyle}
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
     >
       {label}
-    </button>
+    </StyledButton>
   );
 };
 
