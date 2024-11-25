@@ -11,4 +11,9 @@ export const StyledViewOverlay = styled.div`
   margin: 25px;
   border-radius: 50px;
   z-index: 10;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 `;
