@@ -5,6 +5,7 @@ export const StyledInputContainer = styled.div`
   flex-direction: column;
   gap: 5px;
   width: 100%;
+  padding-bottom: 5px;
 `;
 
 export const StyledInput = styled.input<{ hasError: boolean }>`
