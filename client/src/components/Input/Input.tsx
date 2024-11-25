@@ -1,21 +1,28 @@
 import React, { ChangeEvent } from "react";
-import { StyledInput } from './styles.ts';
+import { StyledInput, StyledInputContainer, ErrorMessage } from './styles.ts';
 
 interface InputProps {
 	placeholder: string;
 	value: string;
 	onChange: (event: ChangeEvent<HTMLInputElement>) => void;
+	error?: string;
 }
 
-const Input: React.FC<InputProps> = ({ placeholder, value, onChange }) => {
+const Input: React.FC<InputProps> = ({ placeholder, value, onChange, error }) => {
+
+	const hasError = !!error;
 
 	return (
-		<StyledInput
-			type="text"
-			placeholder={placeholder}
-			value={value}
-			onChange={onChange}
-		/>
+		<StyledInputContainer>
+			<StyledInput
+				type="text"
+				placeholder={placeholder}
+				value={value}
+				onChange={onChange}
+				hasError={hasError}
+			/>
+			{hasError && <ErrorMessage>{error}</ErrorMessage>}
+		</StyledInputContainer>
 	);
 };
 
