@@ -1,10 +1,13 @@
-import {Map} from './components';
+import { Map, ViewOverlay } from './components';
+
 
 function App() {
 
   return (
     <>
-      <Map />
+      <Map>
+        <ViewOverlay />
+      </Map>
     </>
   )
 }
