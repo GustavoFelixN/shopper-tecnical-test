@@ -1,10 +1,10 @@
-import './App.css'
+import {default as Map} from './components/Map.tsx';
 
 function App() {
 
   return (
     <>
-      dale
+      <Map />
     </>
   )
 }
