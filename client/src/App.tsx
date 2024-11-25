@@ -1,4 +1,4 @@
-import {default as Map} from './components/Map.tsx';
+import {Map} from './components';
 
 function App() {
 
