@@ -1,6 +1,10 @@
 import React from 'react';
 
-const ViewOverlay: React.FC = () => {
+interface ViewProps {
+	children: React.ReactNode,
+}
+
+const ViewOverlay: React.FC<ViewProps> = ({ children }) => {
 	return (
 		<div style={{
 			position: 'absolute',
@@ -14,6 +18,7 @@ const ViewOverlay: React.FC = () => {
 			borderRadius: '50px',
 			zIndex: 10,
 		}}>
+			{children}
 		</div>
 	);
 };

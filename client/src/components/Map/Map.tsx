@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { FC, useEffect } from 'react'
 import { GoogleMap, useJsApiLoader } from '@react-google-maps/api'
 
 const API_KEY = import.meta.env.GOOGLE_API_KEY;
@@ -13,7 +13,11 @@ const center = {
   lng: -46.78,
 }
 
-function Map({ children }) {
+interface MapProps {
+  children: React.ReactNode,
+}
+
+const Map: FC<MapProps> = ({ children }) => {
   const { isLoaded } = useJsApiLoader({
     id: 'google-map-script',
     googleMapsApiKey: API_KEY,
