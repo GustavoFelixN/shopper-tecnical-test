@@ -16,17 +16,24 @@ if (process.env.GOOGLE_API_KEY) {
     API_KEY = process.env.GOOGLE_API_KEY;
 }
 
-const getCoords = async (addres: string) => {
+const getCoords = async (address: string) => {
     try {
         const response = await client.geocode({
             params: {
                 key: API_KEY,
-                address: addres,
+                address: address,
             },
         });
-        return response;
+        console.log('Geocode response:', response.data);
+
+        if (response.data.results.length === 0) {
+            throw new Error('No results found for the given address');
+        }
+
+        return response.data.results[0].geometry.location;
     } catch (err: any) {
-        console.error(err);
+        console.error('Error in getCoords:', err);
+        throw err;
     }
 };
 
