@@ -1,4 +1,4 @@
-import { Map, ViewOverlay } from './components';
+import { Map, ViewOverlay, Button } from './components';
 
 
 function App() {
@@ -6,7 +6,9 @@ function App() {
   return (
     <>
       <Map>
-        <ViewOverlay />
+        <ViewOverlay >
+          <Button label='dale' onClick={() => { }} />
+        </ViewOverlay >
       </Map>
     </>
   )
