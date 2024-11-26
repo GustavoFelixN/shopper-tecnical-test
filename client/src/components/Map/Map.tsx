@@ -21,6 +21,7 @@ const Map: FC<MapProps> = ({ children }) => {
   const { isLoaded } = useJsApiLoader({
     id: 'google-map-script',
     googleMapsApiKey: API_KEY,
+    libraries: ['places']
   })
 
   useEffect(() => {
