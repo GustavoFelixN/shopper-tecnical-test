@@ -2,8 +2,11 @@ import React, { useCallback, useState, useRef } from 'react'
 import { ViewOverlay, FormView, Input, Button } from '../index';
 import { Autocomplete } from '@react-google-maps/api';
 
+interface EstimationFormProps {
+	onEstimation: () => void;
+}
 
-const EstimationForm: React.FC = () => {
+const EstimationForm: React.FC<EstimationFormProps> = ({ onEstimation }) => {
 
 	const [customerId, setCustomerId] = useState('');
 	const [origin, setOrigin] = useState('');
@@ -80,6 +83,7 @@ const EstimationForm: React.FC = () => {
 			return;
 		}
 		console.log('Formulário enviado com sucesso!');
+		onEstimation();
 	};
 
 	const handleKeyDown = (e: React.KeyboardEvent<HTMLFormElement>) => {

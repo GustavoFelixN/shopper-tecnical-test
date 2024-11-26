@@ -1,8 +1,10 @@
-import { Map, DriversList } from './components';
+import { useState } from 'react';
+import { Map, EstimationForm, DriversList } from './components';
 import { DriverProps } from './components/DriverCard/DriverCard.tsx';
 
 function App() {
 
+  const [operation, setOpertion] = useState('estimation');
   const homer: DriverProps = {
     id: 1,
     name: 'Homer Simpson',
@@ -17,9 +19,18 @@ function App() {
 
   const drivers = [homer, homer, homer, homer];
 
+  const getOperation = () => {
+    switch (operation) {
+      case 'estimation':
+        return <EstimationForm onEstimation={() => setOpertion('driver_selection')} />
+      case 'driver_selection':
+        return <DriversList drivers={[]} onSelection={() => setOpertion('estimation')} />
+    }
+  }
+
   return (
     <Map>
-      <DriversList drivers={drivers} onSelection={() => { }} />
+      {getOperation()}
     </Map>
   );
 }
