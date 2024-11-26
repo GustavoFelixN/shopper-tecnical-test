@@ -2,7 +2,7 @@ import React from 'react';
 import { Container, TitleView, NameView, SelectionView, Name, Description, Vehicle, Rating, Value } from './styles';
 import { Button } from '../index';
 
-export interface DriverCardProps {
+export interface DriverProps {
 	id: number;
 	name: string;
 	description: string;
@@ -14,7 +14,13 @@ export interface DriverCardProps {
 	value: number;
 }
 
-const DriverCard: React.FC<DriverCardProps> = ({ name, description, vehicle, review, value }) => {
+interface DriverCardProps {
+	driver: DriverProps;
+	onSelection: () => {};
+}
+
+const DriverCard: React.FC<DriverCardProps> = ({ driver, onSelection }) => {
+	const { name, description, vehicle, review, value } = driver;
 	const formattedValue = new Intl.NumberFormat('pt-BR', {
 		style: 'currency',
 		currency: 'BRL',
@@ -31,7 +37,7 @@ const DriverCard: React.FC<DriverCardProps> = ({ name, description, vehicle, rev
 			<Description>{description}</Description>
 			<SelectionView>
 				<Value>{formattedValue}</Value>
-				<Button label="Selecionar" />
+				<Button label="Selecionar" onClick={onSelection} />
 			</SelectionView>
 		</Container>
 	)

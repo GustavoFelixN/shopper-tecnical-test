@@ -1,17 +1,18 @@
 import React from "react";
 import { Container } from "./styles";
 import { ViewOverlay, DriverCard } from '../index';
-import { DriverCardProps } from "../DriverCard/DriverCard";
+import { DriverProps } from "../DriverCard/DriverCard";
 
 interface DriversListProps {
-  drivers: Array<DriverCardProps>
+  drivers: Array<DriverProps>;
+  onSelection: () => {};
 }
 
-const DriversList: React.FC<DriversListProps> = ({ drivers }) => {
+const DriversList: React.FC<DriversListProps> = ({ drivers, onSelection }) => {
   return (
     <ViewOverlay>
       <Container>
-        {drivers.map((driver) => <DriverCard {...driver} />)}
+        {drivers.map((driver) => <DriverCard driver={driver} onSelection={onSelection} />)}
       </Container>
     </ViewOverlay>
   )
