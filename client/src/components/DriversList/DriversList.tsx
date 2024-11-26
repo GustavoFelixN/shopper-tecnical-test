@@ -1,6 +1,6 @@
 import React from "react";
-import { Container } from "./styles";
-import { ViewOverlay, DriverCard } from '../index';
+import { Container, ErrorContainer, ErrrorText } from "./styles";
+import { ViewOverlay, DriverCard, Button } from '../index';
 import { DriverProps } from "../DriverCard/DriverCard";
 
 interface DriversListProps {
@@ -12,7 +12,15 @@ const DriversList: React.FC<DriversListProps> = ({ drivers, onSelection }) => {
   return (
     <ViewOverlay>
       <Container>
-        {drivers.map((driver) => <DriverCard driver={driver} onSelection={onSelection} />)}
+        {
+          drivers.length > 0 ?
+            (drivers.map((driver) => <DriverCard driver={driver} onSelection={onSelection} />))
+            :
+            (<ErrorContainer>
+              <ErrrorText>Nenhum motorista encotrado para essa rota :(</ErrrorText>
+              <Button label="Voltar" />
+            </ErrorContainer>)
+        }
       </Container>
     </ViewOverlay>
   )
