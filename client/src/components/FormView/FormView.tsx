@@ -1,16 +1,12 @@
-import React from "react";
-import { StyledView } from "./styles";
+import React from 'react';
+import { StyledView } from './styles';
 
 interface FormViewProps {
-	children: React.ReactNode;
+    children: React.ReactNode;
 }
 
 const FormView: React.FC<FormViewProps> = ({ children }) => {
-	return (
-		<StyledView>
-			{children}
-		</StyledView>
-	)
-}
+    return <StyledView>{children}</StyledView>;
+};
 
 export default FormView;
