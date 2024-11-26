@@ -16,7 +16,7 @@ export interface DriverProps {
 
 interface DriverCardProps {
 	driver: DriverProps;
-	onSelection: () => {};
+	onSelection: () => void;
 }
 
 const DriverCard: React.FC<DriverCardProps> = ({ driver, onSelection }) => {

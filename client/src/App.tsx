@@ -1,9 +1,9 @@
 import { Map, DriversList } from './components';
-import { DriverCardProps } from './components/DriverCard/DriverCard.tsx';
+import { DriverProps } from './components/DriverCard/DriverCard.tsx';
 
 function App() {
 
-  const homer: DriverCardProps = {
+  const homer: DriverProps = {
     id: 1,
     name: 'Homer Simpson',
     description: 'Olá! Sou o Homer, seu motorista camarada! Relaxe e aproveite o passeio, com direito a rosquinhas e boas risadas (e talvez alguns desvios).',
@@ -19,7 +19,7 @@ function App() {
 
   return (
     <Map>
-      <DriversList drivers={drivers} />
+      <DriversList drivers={drivers} onSelection={() => { }} />
     </Map>
   );
 }

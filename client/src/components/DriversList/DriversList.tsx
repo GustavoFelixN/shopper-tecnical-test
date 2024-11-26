@@ -5,7 +5,7 @@ import { DriverProps } from "../DriverCard/DriverCard";
 
 interface DriversListProps {
   drivers: Array<DriverProps>;
-  onSelection: () => {};
+  onSelection: () => void;
 }
 
 const DriversList: React.FC<DriversListProps> = ({ drivers, onSelection }) => {
