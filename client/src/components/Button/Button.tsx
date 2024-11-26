@@ -3,7 +3,7 @@ import { StyledButton } from './styles.ts';
 
 interface ButtonProps {
   label: string;
-  onClick: () => void;
+  onClick?: () => void;
 }
 
 const Button: FC<ButtonProps> = ({ label, onClick }) => {

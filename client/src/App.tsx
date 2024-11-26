@@ -39,7 +39,8 @@ function App() {
     return false;
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     clearErrors();
     const hasEmptyFields = checkEmptyFields();
     if (hasEmptyFields) {
@@ -56,7 +57,7 @@ function App() {
   const handleKeyDown = (e: React.KeyboardEvent<HTMLFormElement>) => {
     if (e.key === 'Enter') {
       e.preventDefault(); // Evita o comportamento padrão de recarregar a página
-      handleSubmit();
+      handleSubmit(e);
     }
   };
 
@@ -65,7 +66,7 @@ function App() {
       <ViewOverlay>
         <FormView>
           {/* Adicione o evento onKeyDown no formulário */}
-          <form onKeyDown={handleKeyDown}>
+          <form onKeyDown={handleKeyDown} onSubmit={handleSubmit}>
             <Input
               placeholder="ID"
               value={customerId}
@@ -84,7 +85,7 @@ function App() {
               onChange={(e) => setDestination(e.target.value)}
               error={destinationError}
             />
-            <Button label="Estimar" onClick={handleSubmit} />
+            <Button label="Estimar" />
           </form>
         </FormView>
       </ViewOverlay>
