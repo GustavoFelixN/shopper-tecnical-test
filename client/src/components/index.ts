@@ -6,3 +6,5 @@ export { default as FormView } from './FormView/FormView.tsx';
 export { default as EstimationForm } from './EstimationForm/EstimationForm.tsx';
 export { default as DriverCard } from './DriverCard/DriverCard.tsx';
 export { default as DriversList } from './DriversList/DriversList.tsx';
+export { default as HistoryCard } from './HistoryCard/HistoryCard.tsx';
+export { default as HistoryCardList } from './HistoryCardList/HistoryCardList.tsx';
