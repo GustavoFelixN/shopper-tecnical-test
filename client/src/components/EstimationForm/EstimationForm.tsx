@@ -1,7 +1,10 @@
-import React, { useState } from 'react'
+import React, { useCallback, useState, useRef } from 'react'
 import { ViewOverlay, FormView, Input, Button } from '../index';
+import { Autocomplete } from '@react-google-maps/api';
+
 
 const EstimationForm: React.FC = () => {
+
 	const [customerId, setCustomerId] = useState('');
 	const [origin, setOrigin] = useState('');
 	const [destination, setDestination] = useState('');
@@ -9,6 +12,32 @@ const EstimationForm: React.FC = () => {
 	const [customerIdError, setCustomerIdError] = useState('');
 	const [originError, setOriginError] = useState('');
 	const [destinationError, setDestinationError] = useState('');
+
+
+	const autocompleteOriginRef = useRef<google.maps.places.Autocomplete | null>(null);
+	const autocompleteDestinationRef = useRef<google.maps.places.Autocomplete | null>(null);
+
+	const onLoadOrigin = useCallback((autocomplete: google.maps.places.Autocomplete) => {
+		autocompleteOriginRef.current = autocomplete;
+	}, []);
+
+	const onLoadDestination = useCallback((autocomplete: google.maps.places.Autocomplete) => {
+		autocompleteDestinationRef.current = autocomplete;
+	}, []);
+
+	const onPlaceChangedOrigin = useCallback(() => {
+		if (autocompleteOriginRef.current) {
+			const place = autocompleteOriginRef.current.getPlace();
+			setOrigin(place.formatted_address || '');
+		}
+	}, []);
+
+	const onPlaceChangedDestination = useCallback(() => {
+		if (autocompleteDestinationRef.current) {
+			const place = autocompleteDestinationRef.current.getPlace();
+			setDestination(place.formatted_address || '');
+		}
+	}, []);
 
 	const clearErrors = () => {
 		setCustomerIdError('');
@@ -50,20 +79,19 @@ const EstimationForm: React.FC = () => {
 		if (hasSameAddress) {
 			return;
 		}
-		// Lógica adicional ao enviar os dados
 		console.log('Formulário enviado com sucesso!');
 	};
 
 	const handleKeyDown = (e: React.KeyboardEvent<HTMLFormElement>) => {
 		if (e.key === 'Enter') {
-			e.preventDefault(); // Evita o comportamento padrão de recarregar a página
+			e.preventDefault();
 			handleSubmit(e);
 		}
 	};
+
 	return (
 		<ViewOverlay>
 			<FormView>
-				{/* Adicione o evento onKeyDown no formulário */}
 				<form onKeyDown={handleKeyDown} onSubmit={handleSubmit}>
 					<Input
 						placeholder="ID"
@@ -71,18 +99,22 @@ const EstimationForm: React.FC = () => {
 						onChange={(e) => setCustomerId(e.target.value)}
 						error={customerIdError}
 					/>
-					<Input
-						placeholder="Origem"
-						value={origin}
-						onChange={(e) => setOrigin(e.target.value)}
-						error={originError}
-					/>
-					<Input
-						placeholder="Destino"
-						value={destination}
-						onChange={(e) => setDestination(e.target.value)}
-						error={destinationError}
-					/>
+					<Autocomplete onLoad={onLoadOrigin} onPlaceChanged={onPlaceChangedOrigin}>
+						<Input
+							placeholder="Origem"
+							value={origin}
+							onChange={(e) => setOrigin(e.target.value)}
+							error={originError}
+						/>
+					</Autocomplete>
+					<Autocomplete onLoad={onLoadDestination} onPlaceChanged={onPlaceChangedDestination}>
+						<Input
+							placeholder="Destino"
+							value={destination}
+							onChange={(e) => setDestination(e.target.value)}
+							error={destinationError}
+						/>
+					</Autocomplete>
 					<Button label="Estimar" />
 				</form>
 			</FormView>
