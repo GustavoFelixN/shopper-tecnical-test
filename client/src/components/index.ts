@@ -5,3 +5,4 @@ export { default as Input } from './Input/Input.tsx';
 export { default as FormView } from './FormView/FormView.tsx';
 export { default as EstimationForm } from './EstimationForm/EstimationForm.tsx';
 export { default as DriverCard } from './DriverCard/DriverCard.tsx';
+export { default as DriversList } from './DriversList/DriversList.tsx';
