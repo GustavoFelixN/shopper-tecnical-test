@@ -6,6 +6,7 @@ export const Container = styled.div`
   border-left: 8px solid #0dab78;;
   border-radius: 20px;
   padding: 20px;
+  margin-bottom: 10px;
 `;
 export const TitleView = styled.div`
   display: flex;
