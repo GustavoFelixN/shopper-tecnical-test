@@ -2,14 +2,12 @@ import 'dotenv/config';
 import express, { Request, Response } from 'express';
 import { rideEstimateSchema, RideEstimateRequest } from './schemas/rideSchemas';
 import { ValidationError } from 'yup';
-import { Client, TravelMode } from '@googlemaps/google-maps-services-js';
-import { RoutesClient } from '@googlemaps/routing';
+import { Client } from '@googlemaps/google-maps-services-js';
 
 const app = express();
 app.use(express.json());
 
 const client = new Client();
-const routingClient = new RoutesClient();
 
 const PORT = 8080;
 
