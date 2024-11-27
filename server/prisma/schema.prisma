@@ -1,0 +1,36 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = "mysql://root@localhost:3306/shopper"
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+model drivers {
+  id             Int     @id @default(autoincrement())
+  name           String  @db.VarChar(255)
+  description    String? @db.Text
+  vehicle        String? @db.VarChar(100)
+  rating         Int?
+  review_comment String? @db.Text
+  value          Float?  @db.Float
+  min_km         Int?    @default(0)
+  rides          rides[]
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+model rides {
+  id          Int      @id @default(autoincrement())
+  customer_id Int
+  driver_id   Int
+  date        DateTime @db.DateTime(0)
+  origin      String?  @db.VarChar(255)
+  destination String?  @db.VarChar(255)
+  duration    Int?
+  value       Float?   @db.Float
+  drivers     drivers  @relation(fields: [driver_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "rides_ibfk_1")
+
+  @@index([driver_id], map: "driver_id")
+}
