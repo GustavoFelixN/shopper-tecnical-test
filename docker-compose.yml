@@ -5,6 +5,8 @@ services:
       context: ./server
       dockerfile: Dockerfile
       target: base
+    depends_on:
+      db
     volumes:
       - ./server/src:/app/src
       - ./server/nodemon.json:/app/nodemon.json
@@ -26,6 +28,8 @@ services:
       MYSQL_DATABASE: my_database       # Nome do banco de dados
       MYSQL_USER: my_user               # Usuário adicional
       MYSQL_PASSWORD: my_password       # Senha do usuário adicional
+    expose:
+      - '3306'
     ports:
       - "3306:3306"
     volumes:
