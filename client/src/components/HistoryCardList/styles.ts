@@ -15,6 +15,9 @@ export const Container = styled.div`
 
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
+
+    overflow-y: auto;
+    scrollbar-width: none;
 `;
