@@ -103,14 +103,15 @@ const getRoute = async (coordOrigin: Coord, coordDestination: Coord) => {
     }
 };
 
-const formatDriver = (driver: drivers) => {
-    let { rating, review_comment, ...rest } = driver;
+const formatDriver = (driver: drivers, kms: number) => {
+    let { rating, review_comment, value, ...rest } = driver;
     return {
         ...rest,
         review: {
             rating,
             comment: review_comment,
-        }
+        },
+        value: value ? (value * kms) : value,
     }
 }
 
@@ -143,7 +144,7 @@ const estimateRoute = async (req: Request, res: Response) => {
                     }
                 }
             });
-            const formattedDrivers = drivers.map(driver => formatDriver(driver))
+            const formattedDrivers = drivers.map(driver => formatDriver(driver, kms))
             const response = {
                 origin: coordOrigin,
                 destination: coordDestination,
