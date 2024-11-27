@@ -14,9 +14,9 @@ CREATE TABLE drivers (
 
 CREATE TABLE rides (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    customer_id INT NOT NULL,
+    customer_id VARCHAR(255) NOT NULL,
     driver_id INT NOT NULL,
-    date DATETIME NOT NULL,
+    date DATETIME DEFAULT CURRENT_TIMESTAMP,
     origin VARCHAR(255) NULL,
     destination VARCHAR(255) NULL,
     duration INT CHECK (duration >= 0), -- duração em minutos
