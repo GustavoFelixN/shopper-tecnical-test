@@ -1,6 +1,6 @@
 import 'dotenv/config';
 import express, { Request, Response } from 'express';
-import { rideEstimateSchema, RideEstimateRequest } from './schemas/rideSchemas';
+import { rideEstimateSchema, RideEstimateRequest, RideConfirmationRequest, rideConfirmationSchema } from './schemas/rideSchemas';
 import { ValidationError } from 'yup';
 import { Client } from '@googlemaps/google-maps-services-js';
 import { drivers, PrismaClient } from '@prisma/client';
@@ -165,7 +165,50 @@ const estimateRoute = async (req: Request, res: Response) => {
     }
 };
 
+
+const confirmRide = async (req: Request, res: Response) => {
+    try {
+        const validateBody: RideConfirmationRequest = await rideConfirmationSchema.validate(req.body);
+        const driverId = validateBody.driver.id;
+        const driver = await prisma.drivers.findUnique({
+            where: {
+                id: driverId,
+            }
+        });
+
+        if (!driver || driver.name !== validateBody.driver.name) {
+            return res.status(404).json({ error_code: 'DRIVER_NOT_FOUND', error_description: 'Motorista nao encontrado' });
+        }
+
+        const distanceKM = validateBody.distance / 1000;
+        if (driver.min_km && driver.min_km > distanceKM) {
+            return res.status(406).json({ error_code: 'INVALID_DISTANCE', error_description: 'Quilometragem invalida para motorista' });
+        }
+
+        await prisma.rides.create({
+            data: {
+                customer_id: validateBody.customer_id,
+                driver_id: validateBody.driver.id,
+                origin: validateBody.origin,
+                destination: validateBody.destination,
+                value: validateBody.value,
+            }
+        })
+
+        res.json({ sucess: true })
+    } catch (err) {
+        if (err instanceof ValidationError) {
+            return res.status(400).json({
+                error_code: 'INVALID_DATA',
+                error_description: err.message,
+            });
+        }
+    }
+};
+
+
 app.post('/ride/estimate', async (req, res) => estimateRoute(req, res) as any);
+app.post('/ride/confirm', async (req, res) => confirmRide(req, res) as any);
 
 app.listen(PORT, () => {
     console.log(`Server runnig at port: ${PORT}`);
