@@ -3,12 +3,13 @@ import express, { Request, Response } from 'express';
 import { rideEstimateSchema, RideEstimateRequest } from './schemas/rideSchemas';
 import { ValidationError } from 'yup';
 import { Client } from '@googlemaps/google-maps-services-js';
+import { drivers, PrismaClient } from '@prisma/client';
 
 const app = express();
 app.use(express.json());
 
 const client = new Client();
-
+const prisma = new PrismaClient();
 const PORT = 8080;
 
 let API_KEY: string;
@@ -102,6 +103,17 @@ const getRoute = async (coordOrigin: Coord, coordDestination: Coord) => {
     }
 };
 
+const formatDriver = (driver: drivers) => {
+    let { rating, review_comment, ...rest } = driver;
+    return {
+        ...rest,
+        review: {
+            rating,
+            comment: review_comment,
+        }
+    }
+}
+
 const estimateRoute = async (req: Request, res: Response) => {
     try {
         const validateBody: RideEstimateRequest =
@@ -123,12 +135,21 @@ const estimateRoute = async (req: Request, res: Response) => {
         );
         if (routes && routes.routes.length >= 1) {
             const route = routes.routes[0];
+            const kms = route.distanceMeters / 1000;
+            const drivers = await prisma.drivers.findMany({
+                where: {
+                    min_km: {
+                        lte: kms,
+                    }
+                }
+            });
+            const formattedDrivers = drivers.map(driver => formatDriver(driver))
             const response = {
                 origin: coordOrigin,
                 destination: coordDestination,
                 distance: route.distanceMeters,
                 duration: route.duration,
-                options: [],
+                options: formattedDrivers,
                 routeResponse: routes,
             };
             return res.json(response);
