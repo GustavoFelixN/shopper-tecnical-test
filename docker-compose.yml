@@ -1,37 +1,37 @@
 services:
-  server:
-    env_file: ./.env
-    build:
-      context: ./server
-      dockerfile: Dockerfile
-      target: base
-    depends_on:
-      db
-    volumes:
-      - ./server/src:/app/src
-      - ./server/nodemon.json:/app/nodemon.json
-    expose:
-      - '8080'
-    ports:
-      - '8080:8080'
-    dns:
-      - 8.8.8.8
-      - 8.8.4.4
+    server:
+        env_file: ./.env
+        build:
+            context: ./server
+            dockerfile: Dockerfile
+            target: base
+        depends_on:
+            - db
+        volumes:
+            - ./server/src:/app/src
+            - ./server/nodemon.json:/app/nodemon.json
+        expose:
+            - '8080'
+        ports:
+            - '8080:8080'
+        dns:
+            - 8.8.8.8
+            - 8.8.4.4
 
-    command: npm run dev
+        command: npm run dev
 
-  db:
-    image: mysql:8.0
-    container_name: shopper-db
-    environment:
-      MYSQL_ROOT_PASSWORD: password     # Senha do usuário root
-      MYSQL_DATABASE: my_database       # Nome do banco de dados
-      MYSQL_USER: my_user               # Usuário adicional
-      MYSQL_PASSWORD: my_password       # Senha do usuário adicional
-    expose:
-      - '3306'
-    ports:
-      - "3306:3306"
-    volumes:
-      - ./db:/docker-entrypoint-initdb.d # Monta a pasta `init` no diretório de inicialização do MySQL
-    restart: always
+    db:
+        image: mysql:8.0
+        container_name: shopper-db
+        environment:
+            MYSQL_ROOT_PASSWORD: password # Senha do usuário root
+            MYSQL_DATABASE: my_database # Nome do banco de dados
+            MYSQL_USER: my_user # Usuário adicional
+            MYSQL_PASSWORD: my_password # Senha do usuário adicional
+        expose:
+            - '3306'
+        ports:
+            - '3306:3306'
+        volumes:
+            - ./db:/docker-entrypoint-initdb.d # Monta a pasta `init` no diretório de inicialização do MySQL
+        restart: always
